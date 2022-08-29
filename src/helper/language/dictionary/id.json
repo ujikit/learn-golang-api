@@ -1,4 +1,5 @@
 {
-  "testing": "Uji coba",
-  "ready": "Siap"
+  "Testing": "Uji coba",
+  "Response_DataSuccess": "Data berhasil di muat",
+  "Response_ServerError": "Server sedang mengalami masalah"
 }

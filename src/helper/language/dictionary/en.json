@@ -1,4 +1,5 @@
 {
-  "testing": "Testing",
-  "ready": "Ready"
+  "Testing": "Testings",
+  "Response_DataSuccess": "Data successfully retrieved",
+  "Response_ServerError": "There is error in our server"
 }

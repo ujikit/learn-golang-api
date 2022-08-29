@@ -1,31 +1,59 @@
-package main
+package language
 
 import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"reflect"
 
-	LanguageInterface "expense-tracker-api/src/helper/interface/language"
+	// Interface
+	LanguageInterface "expense-tracker-api/src/interface/helper/language"
 )
 
 func LoadConfiguration (filename string) (LanguageInterface.Word, error) {
 
 	var word LanguageInterface.Word
 	readWord, err := os.Open(filename)
-	defer readWord.Close()
 	if err != nil {
-	   return word, err
+		return word, err
 	}
+	defer readWord.Close()
+	
 	jsonParser := json.NewDecoder(readWord)
 	err = jsonParser.Decode(&word)
+	if err != nil {
+		fmt.Println("error", err)
+		return word, err
+	}
 	return word, err
 }
 
-func main() {
-	// default language code
+func Translate(word string) (string) {
+	
+	// set the default language code
 	languageCode := "en"
 
 	fmt.Println("Starting to read json file...")
-	word, _ := LoadConfiguration("dictionary/"+languageCode+".json")
-	fmt.Println(word)
+	var allWords LanguageInterface.Word
+	allWords, err := LoadConfiguration("src/helper/language/dictionary/"+languageCode+".json")
+	
+	if err != nil {
+		fmt.Println("error", err)
+		return err.Error()
+	}
+
+	var reflectValue = reflect.ValueOf(allWords)
+
+    if reflectValue.Kind() == reflect.Ptr {
+        reflectValue = reflectValue.Elem()
+    }
+
+    for i := 0; i < reflectValue.NumField(); i++ {
+		varName := reflectValue.Type().Field(i).Name
+		if varName ==  word{
+			return reflectValue.Field(i).String()
+		}
+    }
+
+	return word
 }

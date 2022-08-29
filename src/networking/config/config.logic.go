@@ -3,25 +3,36 @@ package networking
 import (
 	"fmt"
 	http "net/http"
+	json "encoding/json"
+	httprouter "github.com/julienschmidt/httprouter"
 
+	// Constant
 	constant "expense-tracker-api/src/constant"
 
-	httprouter "github.com/julienschmidt/httprouter"
+	// Service
+	service "expense-tracker-api/src/service"
 )
 
-const ServerPort string = "localhost:" + constant.ServerPort
-const message string = "\nRunning on http://" + ServerPort + "\n\n"
+const ServerHostAndPort string = "localhost:" + constant.ServerPort
+const message string = "\nRunning on http://" + ServerHostAndPort + "\n\n"
 
 func RunServer() {
 	router := httprouter.New()
-	router.GET("/", func(writer http.ResponseWriter, request *http.Request, param httprouter.Params) {
-		fmt.Fprint(writer, "hellow yaes")
+
+	router.GET("/", func(w http.ResponseWriter, request *http.Request, param httprouter.Params) {
+		languageCode := request.URL.Query().Get("languageCode")
+		userData := service.UserDetail(languageCode)
+		convert, _ := json.Marshal(userData)
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(convert)
 	})
 
 	server := http.Server{
 		Handler: router,
-		Addr:    ServerPort,
+		Addr:    ServerHostAndPort,
 	}
-	fmt.Printf(message)
+
+	fmt.Println(message)
 	server.ListenAndServe()
 }
