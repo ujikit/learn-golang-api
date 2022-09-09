@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"reflect"
+	"context"
 
 	// Interface
 	LanguageInterface "expense-tracker-api/src/interface/helper/language"
@@ -28,12 +29,10 @@ func LoadConfiguration (filename string) (LanguageInterface.Word, error) {
 	return word, err
 }
 
-func Translate(word string) (string) {
-	
-	// set the default language code
-	languageCode := "en"
-
+func Translate(ctx context.Context, word string) (string) {
 	fmt.Println("Starting to read json file...")
+
+	languageCode := ctx.Value("languageCode").(string)
 	var allWords LanguageInterface.Word
 	allWords, err := LoadConfiguration("src/helper/language/dictionary/"+languageCode+".json")
 	

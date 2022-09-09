@@ -2,6 +2,7 @@ package networking
 
 import (
 	"fmt"
+	context "context"
 	http "net/http"
 	json "encoding/json"
 	httprouter "github.com/julienschmidt/httprouter"
@@ -21,7 +22,9 @@ func RunServer() {
 
 	router.GET("/", func(w http.ResponseWriter, request *http.Request, param httprouter.Params) {
 		languageCode := request.URL.Query().Get("languageCode")
-		userData := service.UserDetail(languageCode)
+		ctx := context.Background()
+		ctx = context.WithValue(ctx, "languageCode", languageCode)
+		userData := service.UserDetail(ctx)
 		convert, _ := json.Marshal(userData)
 
 		w.Header().Set("Content-Type", "application/json")
