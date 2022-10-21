@@ -4,10 +4,10 @@ import (
 	context "context"
 
 	// Interface
-	ServiceInterface "expense-tracker-api/src/service/interface"
+	ServiceInterface "learn-golang-api/src/service/interface"
 	
 	// Logic
-	LanguageLogic "expense-tracker-api/src/helper/language"
+	LanguageLogic "learn-golang-api/src/helper/language"
 )
 
 func UserDetail (ctx context.Context) (ServiceInterface.UserData){

@@ -8,7 +8,7 @@ import (
 	"context"
 
 	// Interface
-	LanguageInterface "expense-tracker-api/src/interface/helper/language"
+	LanguageInterface "learn-golang-api/src/interface/helper/language"
 )
 
 func LoadConfiguration (filename string) (LanguageInterface.Word, error) {

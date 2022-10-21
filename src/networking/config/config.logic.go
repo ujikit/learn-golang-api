@@ -8,10 +8,10 @@ import (
 	httprouter "github.com/julienschmidt/httprouter"
 
 	// Constant
-	constant "expense-tracker-api/src/constant"
+	constant "learn-golang-api/src/constant"
 
 	// Service
-	service "expense-tracker-api/src/service"
+	service "learn-golang-api/src/service"
 )
 
 const ServerHostAndPort string = "localhost:" + constant.ServerPort

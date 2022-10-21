@@ -1,7 +1,7 @@
 package main
 
 import (
-	Networking "expense-tracker-api/src/networking/config"
+	Networking "learn-golang-api/src/networking/config"
 )
 
 func main() {
